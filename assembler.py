@@ -148,7 +148,25 @@ def Assemble_R_Type(cmd, operands, line_num):
 
     #TODO: Lab 1 - implement this
 
-    raise NotImplementedError
+    if(len(operands) != 3):
+        raise BadOperands("Incorrect number of operands found in R Type on line %s with args:\n\t%s %s\n" % (line_num, cmd, operands))
+
+    field_data = inst_to_fields[cmd]
+
+    rd  = get_register_bin(operands[0])
+    rs1 = get_register_bin(operands[1])
+    rs2 = get_register_bin(operands[2])
+
+    inst_field_list = [field_data.func7,
+                       rs2,
+                       rs1,
+                       field_data.func3,
+                       rd, 
+                       field_data.opcode]
+
+    return join_inst_fields_bin(inst_field_list)
+
+
 
 def Assemble_I_Type(cmd, operands, line_num):
     """Takes an I Type instruction name and its operands (as a list) and 
